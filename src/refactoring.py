@@ -17,13 +17,13 @@ class MailClient:
         msg['Subject'] = subject
         msg.attach(MIMEText(msg_text))
 
-        ms = SMTP(self.MAIL_SMTP, smtp_port)
-        ms.ehlo()
-        ms.starttls()
-        ms.ehlo()
-        ms.login(from_addr, passwd)
-        sendmail_result = ms.sendmail(from_addr, ms, msg.as_string())
-        ms.quit()
+        smtp_obj = SMTP(self.MAIL_SMTP, smtp_port)
+        smtp_obj.ehlo()
+        smtp_obj.starttls()
+        smtp_obj.ehlo()
+        smtp_obj.login(from_addr, passwd)
+        sendmail_result = smtp_obj.sendmail(from_addr, to_addrs, msg.as_string())
+        smtp_obj.quit()
         return sendmail_result
 
     def recieve_message(self, from_addr, passwd, header=None):
